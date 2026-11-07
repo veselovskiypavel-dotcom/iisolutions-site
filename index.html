@@ -78,7 +78,8 @@ body{margin:0;background:#FFFFFF;color:#00294E;font-family:Inter,system-ui,sans-
 .pm .hero{position:relative;overflow:hidden;background:#FFFFFF;min-height:clamp(640px,calc(100vh - 150px),880px);display:flex;align-items:center}
 .pm .hero-grid{position:relative;z-index:1;padding-top:80px;padding-bottom:96px}
 .pm .hero-txt{display:flex;flex-direction:column;gap:28px;min-width:0}
-.pm .hero-art{--art:clamp(600px,58vw,1000px);position:absolute;top:50%;left:calc(50% + 16px);width:var(--art);height:var(--art);margin-top:calc(var(--art) / -2);pointer-events:none}
+/* шкала вписана в высоту секции: раньше 58vw вылезали за низ и правый край и резались */
+.pm .hero-art{position:absolute;top:40px;bottom:40px;left:calc(50% + 24px);height:auto;width:auto;max-width:calc(50% - 48px);aspect-ratio:1;pointer-events:none}
 .pm .hero-art svg{display:block;width:100%;height:100%;overflow:visible}
 .pm .arc,.pm .garc{transform-box:view-box}
 .pm .arc{transform-origin:400px 400px;will-change:transform}
@@ -181,7 +182,7 @@ body{margin:0;background:#FFFFFF;color:#00294E;font-family:Inter,system-ui,sans-
 @media (max-width:1080px){
 .pm .hero{display:flex;flex-direction:column;align-items:stretch;min-height:0}
 .pm .hero-grid{order:1;grid-template-columns:minmax(0,1fr);padding-bottom:16px}
-.pm .hero-art{order:2;position:relative;top:auto;left:auto;margin:0 0 0 12%;width:100%;height:auto;aspect-ratio:1}
+.pm .hero-art{order:2;position:relative;top:auto;bottom:auto;left:auto;max-width:none;margin:0 0 0 12%;width:100%;height:auto;aspect-ratio:1}
 .pm .hero-num{font-size:80px}
 .pm .ap-row{grid-template-columns:minmax(0,1fr)}
 .pm .ap-row .ph{height:auto;aspect-ratio:4/3}}
