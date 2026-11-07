@@ -106,7 +106,9 @@ body{margin:0;background:#FFFFFF;color:#00294E;font-family:Inter,system-ui,sans-
 .intro .pm .hero-txt > :nth-child(5){animation-delay:240ms}
 /* интро шкалы ждёт, пока до неё долистают: заставка стоит выше */
 .intro .pm .hero .arc .trk,.intro .pm .hero .arc .fil,.intro .pm .hero .arc .lab,.intro .pm .hero .hero-read,.intro .pm .hero .hero-txt > *{animation-play-state:paused}
-.intro .pm .hero.play .arc .trk,.intro .pm .hero.play .arc .fil,.intro .pm .hero.play .arc .lab,.intro .pm .hero.play .hero-read,.intro .pm .hero.play .hero-txt > *{animation-play-state:running}
+/* текст и шкала стартуют порознь: на телефоне шкала стоит под текстом */
+.intro .pm .hero.play .hero-txt > *{animation-play-state:running}
+.intro .pm .hero.play-art .arc .trk,.intro .pm .hero.play-art .arc .fil,.intro .pm .hero.play-art .arc .lab,.intro .pm .hero.play-art .hero-read{animation-play-state:running}
 .pm .hero{border-top:1px solid #D9DDD3}
 /* заставка: знак собирается вращением дуг */
 .pm .stage{position:relative;min-height:max(560px,calc(100svh - 140px));display:flex;flex-direction:column;align-items:center;justify-content:center;background:#FFFFFF;overflow:hidden;padding:48px 16px 120px;box-sizing:border-box;text-align:center}
@@ -196,6 +198,45 @@ body{margin:0;background:#FFFFFF;color:#00294E;font-family:Inter,system-ui,sans-
 .js .pm .mol .mb{stroke-dashoffset:0;transition:none}
 .js .pm .mol .mn{opacity:1;transform:none;transition:none}
 .js .pm .mol.in .mol-g,.js .pm .mol.in .mn-o{animation:none}}
+
+/* мобильное меню */
+.pm header{position:relative;z-index:20}
+.pm .mnav{display:none;margin-left:auto}
+.pm .mnav > summary{list-style:none;width:48px;height:48px;box-sizing:border-box;border:1px solid #00294E;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#00294E}
+.pm .mnav > summary::-webkit-details-marker{display:none}
+.pm .mnav > summary:focus-visible{outline:2px solid #74B359;outline-offset:2px}
+.pm .mnav .ic-x{display:none}
+.pm .mnav[open] .ic-x{display:block}
+.pm .mnav[open] .ic-m{display:none}
+.pm .mnav[open] > summary{background:#00294E;color:#FFFFFF}
+.pm .mnav-panel{position:absolute;left:0;right:0;top:100%;background:#FFFFFF;border-bottom:1px solid #D9DDD3;box-shadow:0 16px 32px rgba(0,41,78,.08);padding:8px 16px 16px;display:flex;flex-direction:column}
+.pm .mnav-panel a{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid #EDEFE9;font:600 20px/1.2 'Inter Tight',sans-serif;color:#00294E;text-decoration:none}
+.pm .mnav-panel a::after{content:"→";font:400 16px 'IBM Plex Mono',monospace;color:#43762D}
+.pm .mnav-panel a:last-child{border-bottom:0}
+@media (max-width:1080px){.pm .mnav{display:block}}
+@media (max-width:760px){
+/* вертикальный ритм: десктопные 96–112 px сверху и снизу сжимаем */
+.pm section:not(.hero) > .wrap{padding-top:64px !important;padding-bottom:64px !important}
+.pm section:not(.hero) > .wrap.g2{gap:40px !important}
+/* первый экран: шкала по ширине экрана, подписи читаемые */
+.pm .hero-grid{padding-top:48px;padding-bottom:8px}
+.pm .hero-art{margin:0 16px 48px;width:calc(100% - 32px);max-width:440px;align-self:center}
+.pm .arc .lab{font-size:30px}
+/* научный подход: фото карточек ниже, иначе три экрана подряд — одни снимки */
+.pm .ap-card .ph{aspect-ratio:3/2}
+/* «Что внутри»: карточки с полями 24, фото на всю ширину карточки */
+.pm #science .g2 > div{padding:24px !important}
+/* Dimixin: молекула поменьше, состав в две колонки */
+.pm .mol{max-width:300px !important;margin:0 auto}
+.pm #course .g4{grid-template-columns:repeat(2,minmax(0,1fr)) !important;row-gap:8px}
+.pm #course .g4 > div{padding-bottom:12px !important}
+/* заставка */
+.pm .stage{padding-bottom:96px}
+.pm .stage-sub{font-size:11px;letter-spacing:.04em;max-width:300px}
+/* заголовок и абзац секции: десктопный зазор 64 px на телефоне рвёт их на два блока */
+.pm section .wrap > .g2{gap:20px !important}}
+/* значок «+» в вопросах не сжимается, когда вопрос в две строки */
+.pm .faq-q > :last-child{flex-shrink:0}
 </style>
 </head>
 <body>
@@ -229,6 +270,7 @@ body{margin:0;background:#FFFFFF;color:#00294E;font-family:Inter,system-ui,sans-
 <a href="#use">{{t.nav4}}</a>
 <a href="#buy">{{t.nav5}}</a>
 </nav>
+<details class="mnav"><summary aria-label="Menu"><svg class="ic-m" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="ic-x" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></summary><nav class="mnav-panel" aria-label="Menu"><a href="#products">{{t.nav1}}</a><a href="#science">{{t.nav2}}</a><a href="#course">{{t.nav3}}</a><a href="#use">{{t.nav4}}</a><a href="#buy">{{t.nav5}}</a></nav></details>
 <a class="btn btn-line" href="#verify" style="gap: 10px">
 <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#43762D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
 <span class="hide-s">{{t.verifyBtn}}</span>
@@ -810,16 +852,21 @@ function afterRender(v) {
 }
 
 function watchReveals(root) {
-  if (IOS[root.id]) IOS[root.id].disconnect();
+  (IOS[root.id] || []).forEach(function (o) { o.disconnect(); });
   var els = root.querySelectorAll('.rv, .rv-img, .gs, .mol');
   if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
-  var io = IOS[root.id] = new IntersectionObserver(function (ents) {
+  function onSee(ents, obs) {
     ents.forEach(function (en) {
       if (!en.isIntersecting) return;
       var el = en.target.__rv || en.target;
-      el.classList.add('in'); SEEN[el.dataset.k] = 1; io.unobserve(en.target);
+      el.classList.add('in'); SEEN[el.dataset.k] = 1; obs.unobserve(en.target);
     });
-  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.05 });
+  }
+  /* тексты и фото проявляются с краю экрана; рисунки (молекула) — когда видны почти наполовину,
+     иначе анимация отыгрывает, пока рисунок ещё за нижней кромкой */
+  var ioText = new IntersectionObserver(onSee, { rootMargin: '0px 0px -12% 0px', threshold: 0.05 });
+  var ioArt = new IntersectionObserver(onSee, { threshold: 0.45 });
+  IOS[root.id] = [ioText, ioArt];
   els.forEach(function (e, i) {
     e.dataset.k = root.id + i;
     if (SEEN[e.dataset.k]) {                      /* уже показан до перерисовки: без повтора */
@@ -827,8 +874,9 @@ function watchReveals(root) {
       requestAnimationFrame(function () { requestAnimationFrame(function () { e.classList.remove('now'); }); });
     } else if (e.classList.contains('rv-img')) {
       /* скрытое clip-path для наблюдателя имеет нулевую площадь: следим за родителем */
-      e.parentElement.__rv = e; io.observe(e.parentElement);
-    } else io.observe(e);
+      e.parentElement.__rv = e; ioText.observe(e.parentElement);
+    } else if (e.classList.contains('mol') || e.classList.contains('gs')) ioArt.observe(e);
+    else ioText.observe(e);
   });
 }
 
@@ -843,21 +891,34 @@ function bindHero(root) {
     heroIO = new IntersectionObserver(function (e) { heroOn = e[0].isIntersecting; if (heroOn) kick(); });
   }
   if (heroIO) { heroIO.disconnect(); heroIO.observe(h); }
-  /* интро шкалы стартует, когда первый экран показался на треть */
+  /* текст стартует, когда показался текст; шкала — только когда на экране сама шкала */
+  var txt = h.querySelector('.hero-txt'), art = h.querySelector('.hero-art');
   if (PLAYED) h.classList.add('play');
-  else if ('IntersectionObserver' in window) {
-    if (playIO) playIO.disconnect();
+  if (PLAYED_ART) h.classList.add('play-art');
+  if (!('IntersectionObserver' in window)) {
+    PLAYED = PLAYED_ART = heroDone = true; h.classList.add('play', 'play-art'); kick(); return;
+  }
+  if (playIO) playIO.disconnect();
+  if (artIO) artIO.disconnect();
+  if (!PLAYED) {
     playIO = new IntersectionObserver(function (e) {
       if (!e[0].isIntersecting || PLAYED) return;
-      PLAYED = true; playIO.disconnect();
-      heroEl.classList.add('play'); countWeeks();
+      PLAYED = true; playIO.disconnect(); heroEl.classList.add('play');
+    }, { threshold: 0.3 });
+    playIO.observe(txt || h);
+  }
+  if (!PLAYED_ART) {
+    artIO = new IntersectionObserver(function (e) {
+      if (!e[0].isIntersecting || PLAYED_ART) return;
+      PLAYED_ART = true; artIO.disconnect();
+      heroEl.classList.add('play-art'); countWeeks();
       setTimeout(function () { heroDone = true; maybeEnd(); }, 3400);
-    }, { threshold: 0.35 });
-    playIO.observe(h);
-  } else { PLAYED = true; heroDone = true; h.classList.add('play'); }
+    }, { threshold: 0.45 });
+    artIO.observe(art || h);
+  }
   kick();
 }
-var heroIO = null, playIO = null, PLAYED = false, heroDone = false, stageDone = false;
+var heroIO = null, playIO = null, artIO = null, PLAYED = false, PLAYED_ART = false, heroDone = false, stageDone = false;
 function maybeEnd() { if (stageDone && heroDone) ROOT.classList.remove('intro'); }
 function kick() { if (!raf && !RM.matches) raf = requestAnimationFrame(loop); }
 function loop(now) {
@@ -895,6 +956,12 @@ function countWeeks() {
   })(performance.now());
 }
 setTimeout(function () { stageDone = true; maybeEnd(); }, 4100);   /* заставка отыграла */
+/* мобильное меню: закрыть после перехода по пункту и по тапу мимо */
+document.addEventListener('click', function (e) {
+  var m = document.querySelector('.mnav[open]');
+  if (!m) return;
+  if (e.target.closest('.mnav-panel a') || !e.target.closest('.mnav')) m.open = false;
+});
 
 var MainComp = (function () { 
 class Component extends DCLogic {
