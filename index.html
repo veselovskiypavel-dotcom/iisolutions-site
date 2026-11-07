@@ -124,19 +124,34 @@ body{margin:0;background:#FFFFFF;color:#00294E;font-family:Inter,system-ui,sans-
 @keyframes lg-wipe{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes lg-slide{from{transform:translateX(-24px)}to{transform:translateX(0)}}
 @keyframes lg-dot{from{opacity:0;transform:translateY(-40px)}to{opacity:1;transform:translateY(0)}}
-.intro .pm .lg-arc{animation:lg-spin var(--dur) cubic-bezier(0.16,1,0.3,1) both,ii-fade 500ms var(--ease-out) both;animation-delay:calc(var(--i) * 90ms)}
-.intro .pm .lg-wipe{animation:lg-wipe 800ms var(--ease-in-out) 1500ms both}
-.intro .pm .lg-word{animation:lg-slide 900ms var(--ease-out) 1500ms both}
-.intro .pm .lg-dot{animation:lg-dot 600ms var(--ease-out) 2250ms both}
-.intro .pm .stage-slogan{animation:ii-rise 700ms var(--ease-out) 2450ms both}
-.intro .pm .stage-sub{animation:ii-rise 700ms var(--ease-out) 2600ms both}
-.intro .pm .stage-cue{animation:ii-fade 600ms var(--ease-out) 3100ms both}
+.intro .pm .lg-arc{animation:lg-spin 1000ms cubic-bezier(0.16,1,0.3,1) both,ii-fade 900ms var(--ease-out) both;animation-delay:calc(var(--i) * 320ms)}
+.intro .pm .lg-wipe{animation:lg-wipe 800ms var(--ease-in-out) 1800ms both}
+.intro .pm .lg-word{animation:lg-slide 900ms var(--ease-out) 1800ms both}
+.intro .pm .lg-dot{animation:lg-dot 600ms var(--ease-out) 2550ms both}
+.intro .pm .stage-slogan{animation:ii-rise 700ms var(--ease-out) 2750ms both}
+.intro .pm .stage-sub{animation:ii-rise 700ms var(--ease-out) 2900ms both}
+.intro .pm .stage-cue{animation:ii-fade 600ms var(--ease-out) 3400ms both}
 @media (max-width:760px){.pm .stage-slogan{font-size:28px}.pm .stage{min-height:max(480px,calc(100svh - 120px))}}
 /* шкала курса: дуги дорисовываются при появлении */
 .js .pm .gs .fil{stroke-dashoffset:1;transition:stroke-dashoffset 1100ms var(--ease-out);transition-delay:calc(200ms + var(--i) * 350ms)}
 .js .pm .gs text{opacity:0;transition:opacity 400ms var(--ease-out);transition-delay:calc(900ms + var(--i) * 350ms)}
 .js .pm .gs.in .fil{stroke-dashoffset:0}
 .js .pm .gs.in text{opacity:1}
+/* молекула синего блока: связи от центра наружу, узлы проявляются, потом покачивание */
+.pm .mol .mb{fill:none;stroke:rgba(255,255,255,.55);stroke-width:1.5;stroke-linecap:round;stroke-dasharray:1 1;stroke-dashoffset:0}
+.pm .mol .mb2{stroke:rgba(181,209,145,.7)}
+.pm .mol .mn{transform-box:fill-box;transform-origin:center}
+.pm .mol .mn-c{fill:#74B359}
+.pm .mol .mn-o{fill:#00294E;stroke:#DFE9C7;stroke-width:1.5}
+.pm .mol-g{transform-box:fill-box;transform-origin:center}
+@keyframes mol-sway{from{transform:rotate(-4deg)}to{transform:rotate(4deg)}}
+@keyframes mol-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+.js .pm .mol .mb{stroke-dashoffset:1;transition:stroke-dashoffset 520ms var(--ease-out);transition-delay:calc(var(--i) * 170ms)}
+.js .pm .mol .mn{opacity:0;transform:scale(.3);transition:opacity 420ms var(--ease-out),transform 520ms cubic-bezier(0.34,1.56,0.64,1);transition-delay:calc(var(--i) * 170ms)}
+.js .pm .mol.in .mb{stroke-dashoffset:0}
+.js .pm .mol.in .mn{opacity:1;transform:scale(1)}
+.js .pm .mol.in .mol-g{animation:mol-sway 9s ease-in-out 1.8s infinite alternate both}
+.js .pm .mol.in .mn-o{animation:mol-pulse 3.2s ease-in-out infinite;animation-delay:calc(2s + var(--i) * 400ms)}
 /* появление при прокрутке, один раз */
 .js .pm .rv{opacity:0;transform:translateY(24px);transition:opacity 700ms var(--ease-out),transform 700ms var(--ease-out);transition-delay:calc(var(--d,0) * 70ms)}
 .js .pm .rv.in{opacity:1;transform:translateY(0)}
@@ -177,7 +192,10 @@ body{margin:0;background:#FFFFFF;color:#00294E;font-family:Inter,system-ui,sans-
 .js .pm .rv-img.in{opacity:1}
 .js .pm .rv-img img{transform:none}
 .js .pm .gs .fil{stroke-dashoffset:0;transition:none}
-.js .pm .gs text{opacity:1;transition:none}}
+.js .pm .gs text{opacity:1;transition:none}
+.js .pm .mol .mb{stroke-dashoffset:0;transition:none}
+.js .pm .mol .mn{opacity:1;transform:none;transition:none}
+.js .pm .mol.in .mol-g,.js .pm .mol.in .mn-o{animation:none}}
 </style>
 </head>
 <body>
@@ -221,7 +239,7 @@ body{margin:0;background:#FFFFFF;color:#00294E;font-family:Inter,system-ui,sans-
 <!-- заставка -->
 <section id="top" class="stage">
 <div class="stage-in">
-<svg class="lg" viewBox="11 215 1004 599" role="img" aria-label="iiSolutions"><defs><clipPath id="lgClip"><rect class="lg-wipe" x="400" y="440" width="640" height="160"/></clipPath></defs><path class="lg-arc" fill="#DFE9C7" d="M64.53,327.65c-18.01,25.05-31.5,54.19-40.75,84.07-8.6,27.83-13.06,57.3-12.94,86.55.14,33.85,4.52,67.23,15.18,99.3,7.95,23.93,18.69,46.92,32.02,67.99,59.74,94.49,165.63,148.32,271.82,143.03,16.38-.82,32.55-2.4,48.71-5.58,53.53-10.51,104.84-37.61,145.49-75.93,11.14-10.51,21.28-21.97,30.93-34,3.01-3.75,5.85-7.64,8.61-11.59,1.44-2.07,3.17-4.07,4.15-6.44-3.86,2.59-7.22,6.11-10.84,9.08-7.92,6.46-16.03,12.62-24.49,18.26-30.35,20.25-63.69,34.92-98.5,43.93-111.17,28.76-235.72-6.35-315.71-94.66-13.5-14.91-25.59-31.28-36.08-48.7-10.96-18.21-20.3-37.74-27.06-58.15-11.45-34.6-17.23-71.17-15.86-107.87.53-14.09,2.54-28.12,4.83-41.98,2.65-16.02,7.38-32.05,13-47.15,1.72-4.62,3.44-9.22,5.41-13.72.83-1.9,2.43-4.29,2.07-6.43h0s.02,0,.02,0Z" style="--i:0; --r0:-220deg; --dur:1700ms; transform-origin:320px 500px"/><path class="lg-arc" fill="#B5D191" d="M374.92,700.93c-2.78-1.31-6.29-1.03-9.27-1.33-4.04-.4-8.08-1.1-12.09-1.72-12.1-1.86-24.2-4.95-35.88-8.77-48.17-15.74-92.09-46.61-123.51-88.66-18.92-25.32-33.05-54.5-41.54-85.52-19.43-70.97-4.19-149.5,38.04-207.82,18.01-24.88,40.39-46.26,65.63-62.56,13.33-8.61,27.22-15.99,41.8-21.9,6.67-2.7,13.51-5.6,20.51-7.17-1.81-.8-3.75-.25-5.64-.05-4.31.46-8.58,1.1-12.88,1.71-17.13,2.43-34.04,7.3-50.29,13.41-59.46,22.39-110.54,70.41-136.68,131.63-6.99,16.37-11.72,33.44-15.14,51.01-2.58,13.24-3.07,26.41-3.56,39.84-.49,13.22.61,26.3,2.48,39.39,12.61,88.43,75.38,161.59,153.11,192.46,28.72,11.41,59.31,17.18,89.88,17.87,8.99.2,18.03-.3,26.98-.98,2.71-.2,5.32-.84,8.05-.85h0Z" style="--i:1; --r0:260deg; --dur:1800ms; transform-origin:340px 460px"/><path class="lg-arc" fill="#91BB65" d="M310.16,620.2c-3.23-3.72-8.27-6.33-12.12-9.33-6.68-5.2-13-11.08-19-17.14-20.75-20.95-36.96-48.71-45.4-77.78-5.06-17.4-8.59-36.52-8.24-54.79.37-19.06,2.92-37.9,8.32-56.13,18.4-62.1,66.49-112.23,123.77-134.14,26.74-10.23,55.26-15.49,83.71-14.25,9.74.42,19.38,1.88,29.01,3.44,3.24.52,6.4,1.72,9.67,2-2.25-1.96-5.38-2.67-8.07-3.75-6.57-2.62-13.36-4.81-20.17-6.61-26.85-7.04-54.81-8.71-82.18-4.84-72.75,10.32-139.26,59.74-166.42,133.41-16.81,45.57-14.92,99.41,5.33,143.45,13.04,28.37,32.87,52.72,56.97,71.08,9.9,7.55,20.4,14.18,31.49,19.55,4.33,2.1,8.65,4.66,13.31,5.82h0Z" style="--i:2; --r0:-300deg; --dur:1900ms; transform-origin:390px 440px"/><path class="lg-arc" fill="#74B359" d="M282.85,537.21c.68-1.75.12-3.73-.13-5.57-.43-3.13-.77-6.28-1.07-9.42-.97-10.33-.6-20.94.28-31.26,2.96-34.66,16.01-67.78,35.97-95.19,10.05-13.8,22.23-25.84,35.53-36.03,48.46-37.13,114.57-44.41,169.08-18.03,20.61,9.97,38.87,23.91,54.55,41.23,12.07,13.34,23.57,29.4,30.38,46.58.31-1.45-.27-2.86-.66-4.28-.81-2.99-1.52-6.08-2.54-8.99-3.82-10.79-8.1-21.13-13.37-31.22-24.19-46.37-70.34-80.63-119.69-88.57-23.42-3.77-47.44-3.14-70.47,3.06-63.05,16.98-112.43,72.65-124.91,140.49-4.12,22.4-4.03,46.1-.14,68.52,1.08,6.2,2.45,12.34,4.1,18.4.94,3.44,2.3,6.79,3.09,10.27h0Z" style="--i:3; --r0:340deg; --dur:2000ms; transform-origin:440px 460px"/><g class="lg-word" fill="#00294E" clip-path="url(#lgClip)"><path d="M517.26,477.61c-5.95.84-11.32,1.02-17.02,3.52-4.66,2.04-8.81,5.3-11.43,9.94-4.77,8.46-3.08,19.82,4.47,25.76,12.59,9.9,29.63,8.2,43.58,14.54,5.52,2.51,10.49,8.12,8.04,14.85-1.94,5.33-6.85,8.42-11.73,10.08-9.95,3.39-23.89,2.19-32.19-5.08-2.28-1.99-4.11-4.48-5.29-7.36-.7-1.7-.86-4.45-2.46-5.51-1.57-1.03-3.85-.1-5.54-.02-1.15.06-2.62-.18-3.63.55-1.74,1.24-.97,4.28-.52,6.02,1.44,5.76,4.67,10.61,8.97,14.39,7.06,6.21,16.32,7.56,25.11,8.17,6.19.43,12.35.2,18.44-1.36,6.32-1.62,12.75-5.34,16.74-10.87,6.53-9.03,5.64-22.14-2.71-29.5-10.92-9.65-27.61-9.61-40.74-13.57-5.31-1.6-12.64-5.37-11.58-12.58.76-5.18,5.62-9.15,10.07-10.52,8.46-2.6,20.42-3.07,27.92,2.67,2.08,1.59,3.88,3.78,5.05,6.21.77,1.61,1.02,3.99,2.33,5.22,1.7,1.59,7.75,1.05,9.54-.24,1.29-.93,1.18-3.07.98-4.52-.53-3.85-2.92-7.69-5.29-10.54-6.13-7.37-16.18-9.63-24.97-10.01-2.11-.09-4.04-.55-6.15-.25h0Z"/><path d="M418.87,479.05c-9.08,3.07-3.95,18.26,5.26,14.89,9.06-3.31,3.93-18-5.26-14.89Z"/><path d="M454.35,478.97c-9.14,3.56-3.33,18.66,5.73,14.7,8.62-3.76,3.12-18.14-5.73-14.7Z"/><path d="M647.43,478.86c-1.96.95-1.48,3.8-1.47,5.67l.3,73.94c0,1.79-.38,4.29.31,5.96.97,2.34,7.21,2.14,9.11,1.25,1.86-.87,1.48-3.48,1.47-5.24l-.3-74.45c0-1.79.38-4.29-.31-5.96-.99-2.39-7.2-2.1-9.11-1.18h0Z"/><path d="M751.06,502.3c-2.12,0-5.49-.66-7.42.4-1.6.88-1.67,5.95-.31,7.08,1.68,1.4,5.73.58,7.76.57l.13,33.7c.02,5.03-.9,11.46,1.34,16.09,3,6.22,10.18,6.01,15.78,5.99,1.95,0,5.43.29,6.32-2.1.68-1.83-.25-6.41-2.17-7.12-1.16-.43-2.52.15-3.72.05-2.84-.23-5.38-1.94-6.26-4.9-1.21-4.04-.42-9.38-.43-13.58l-.11-28.17c2.76,0,7.89,1.03,10.3-.55,2.04-1.33,2.1-5.71,0-7.01-2.48-1.55-7.53-.49-10.34-.48l-.08-21.13c-3.02.34-9.38,2.83-10.57,6.09-.54,1.5-.27,3.44-.26,5.01l.04,10.06h0Z"/><path d="M419.91,502.63c-6.47,1.59-5.64,8.33-5.62,13.84l.12,30.18c.02,4.87-.57,10.27.16,15.09.62,4.04,4.68,6.91,8.44,6.15,6.54-1.31,6.12-7.71,6.1-13.24l-.12-30.68c-.02-4.98.69-10.7-.22-15.59-.79-4.25-4.97-6.69-8.85-5.74Z"/><path d="M455.39,502.51c-6.32,1.65-5.64,8.45-5.62,13.84l.12,30.18c.02,4.82-.66,10.35.22,15.09.8,4.32,4.86,6.95,8.85,6.09,6.5-1.41,5.64-8.24,5.62-13.68l-.12-30.68c-.02-4.87.57-10.27-.16-15.09-.68-4.43-5-6.76-8.91-5.74Z"/><path d="M898.69,510.88c-.67-2.36.21-5.92-1.33-7.88-1.6-2.05-8.22-2.01-8.96.9-.98,3.85-.12,9.06-.1,13.05l.16,40.74c0,1.83-.34,4.16.18,5.92.74,2.52,8.4,2.34,9.91.72.98-1.04.81-2.81.81-4.16l-.04-10.06c-.05-13.63-3.86-35.49,12.61-39.83,1.91-.5,4.17-.98,6.15-.87,1.42.08,2.89.46,4.26.84,8.1,2.24,9.5,9.91,9.53,17.63l.09,23.14c.01,3.68-.52,7.93.15,11.55.62,3.32,4.6,2.56,7,2.51,1.06-.02,2.55.1,3.29-.89.78-1.03.48-2.93.47-4.16l-.14-34.71c-.03-7.35,0-14.27-5.75-19.49-7.46-6.77-21.82-6.82-30.29-2.39-3.2,1.67-6.48,3.92-8.01,7.44Z"/><path d="M977.66,500.78c-5.27.89-10.66,2.36-14.6,6.45-6.19,6.43-5.6,17.12,1,22.88,3.34,2.92,7.75,4.02,11.85,5.1,6.16,1.62,12.37,3.12,18.47,4.98,3.99,1.21,8.45,4.53,6.67,9.58-3.62,10.24-20.5,9.98-27.43,4.35-1.59-1.3-3.09-2.88-4.08-4.75-.69-1.3-1.02-3.09-2.29-3.93-1.69-1.12-7.06-.24-8.65.95-1.54,1.16-.95,3.47-.38,5.03,1.36,3.73,3.87,7.12,6.91,9.45,8.35,6.43,22.06,6.34,31.71,3.88,4.78-1.21,9.56-3.89,12.68-7.99,4.59-6.03,5.31-15.9-.54-21.37-7.35-6.86-19.32-7.36-28.38-10.06-3.83-1.14-12-3.2-10.78-9.17.66-3.25,3.65-5.41,6.46-6.34,5.53-1.83,13.01-2.12,17.98,1.56,1.33.98,2.55,2.27,3.47,3.69.74,1.14,1.13,2.7,2.34,3.4,1.68.97,7.13.14,8.68-1.01,1.26-.95.97-2.59.54-3.94-.97-3.05-2.71-5.79-5.12-7.77-6.73-5.53-18.39-6.36-26.51-4.99h0Z"/><path d="M720.53,556.72c0,2.15-.76,6.6.79,8.25,1.71,1.81,8.2,1.41,8.97-1.29.52-1.81.19-4.11.18-5.98l-.16-39.74c-.02-4.07.89-9.63-.26-13.53-.81-2.75-8.04-3.04-9.93-1.44-1.01.86-.74,2.72-.74,3.94l.04,10.56c.06,14.45,3.23,35.13-13.56,39.92-2.16.62-4.38,1.07-6.62.74-4.5-.66-9.43-3.11-11.22-7.86-1.2-3.18-1.02-6.72-1.17-10.06-.36-7.88-.52-15.73-.55-23.64-.01-3.69.74-8.48-.2-12.04-.73-2.79-7.69-2.88-9.64-1.49-1.84,1.31-1.08,5.52-1.07,7.53l.09,22.13c.03,8.05-1.14,17.29,2.62,24.64,5.76,11.28,23.83,11.75,33.46,6.77,3.51-1.82,5.84-5.06,8.96-7.41h0Z"/><path d="M786.69,502.7c-1.34.96-1.08,3.04-1.08,4.52l.17,41.75c.02,4.43-.91,10.28.21,14.56.73,2.79,7.69,2.88,9.64,1.49,1.34-.96,1.08-3.04,1.08-4.52l-.17-41.75c-.02-4.43.91-10.28-.21-14.56-.73-2.79-7.69-2.88-9.64-1.49Z"/><path d="M627.2,514.27c-7.47-10.8-21.18-14.28-33.2-12.25-7.53,1.27-14.84,4.86-19.57,11.41-4.54,6.28-5.4,13.51-5.37,21.14.03,7.63.98,14.9,5.54,21.11,7.42,10.11,20.51,13.03,31.96,11.25,7.58-1.18,15.05-4.62,19.96-11.06,3.92-5.14,4.97-11.08,5.55-17.48.75-8.31-.06-17.16-4.87-24.13ZM603.69,558.51c-8.65,1.13-17.68-3.03-21.12-11.91-1.67-4.32-1.67-8.49-1.68-13.07-.02-5.72.74-11.53,4.35-16.1,3.51-4.45,8.31-6.11,13.54-6.88,2.1-.3,4.08,0,6.15.4,21.81,4.28,20.98,44.66-1.23,47.57Z"/><path d="M868.18,512.48c-7.48-10.03-20.95-13.19-32.44-11.24-12.42,2.1-22.21,10.61-24.74,24-.6,3.22-.21,6.79-.2,10.06.03,6.83,1.13,13.48,5.1,19.1,7.46,10.58,20.61,13.59,32.4,11.75,7.97-1.24,15.53-4.99,20.52-11.92,3.58-4.97,4.56-11.05,4.96-17.12.57-8.72-.27-17.49-5.59-24.63ZM845.42,557.73c-8.13,1.07-17.26-2.6-20.84-10.91-1.96-4.55-1.95-9.19-1.97-14.08-.02-5.77.72-11.5,4.35-16.1,3.54-4.49,8.28-6.11,13.54-6.88,2.09-.31,4.09-.03,6.15.41,21.49,4.66,21.12,44.6-1.23,47.55Z"/></g><path class="lg-dot" fill="#00294E" d="M785.46 478.04 H796.50 V489.91 H785.46 Z"/></svg>
+<svg class="lg" viewBox="11 215 1004 599" role="img" aria-label="iiSolutions"><defs><clipPath id="lgClip"><rect class="lg-wipe" x="400" y="440" width="640" height="160"/></clipPath></defs><path class="lg-arc" fill="#DFE9C7" d="M64.53,327.65c-18.01,25.05-31.5,54.19-40.75,84.07-8.6,27.83-13.06,57.3-12.94,86.55.14,33.85,4.52,67.23,15.18,99.3,7.95,23.93,18.69,46.92,32.02,67.99,59.74,94.49,165.63,148.32,271.82,143.03,16.38-.82,32.55-2.4,48.71-5.58,53.53-10.51,104.84-37.61,145.49-75.93,11.14-10.51,21.28-21.97,30.93-34,3.01-3.75,5.85-7.64,8.61-11.59,1.44-2.07,3.17-4.07,4.15-6.44-3.86,2.59-7.22,6.11-10.84,9.08-7.92,6.46-16.03,12.62-24.49,18.26-30.35,20.25-63.69,34.92-98.5,43.93-111.17,28.76-235.72-6.35-315.71-94.66-13.5-14.91-25.59-31.28-36.08-48.7-10.96-18.21-20.3-37.74-27.06-58.15-11.45-34.6-17.23-71.17-15.86-107.87.53-14.09,2.54-28.12,4.83-41.98,2.65-16.02,7.38-32.05,13-47.15,1.72-4.62,3.44-9.22,5.41-13.72.83-1.9,2.43-4.29,2.07-6.43h0s.02,0,.02,0Z" style="--i:3; --r0:180deg; transform-origin:320px 500px"/><path class="lg-arc" fill="#B5D191" d="M374.92,700.93c-2.78-1.31-6.29-1.03-9.27-1.33-4.04-.4-8.08-1.1-12.09-1.72-12.1-1.86-24.2-4.95-35.88-8.77-48.17-15.74-92.09-46.61-123.51-88.66-18.92-25.32-33.05-54.5-41.54-85.52-19.43-70.97-4.19-149.5,38.04-207.82,18.01-24.88,40.39-46.26,65.63-62.56,13.33-8.61,27.22-15.99,41.8-21.9,6.67-2.7,13.51-5.6,20.51-7.17-1.81-.8-3.75-.25-5.64-.05-4.31.46-8.58,1.1-12.88,1.71-17.13,2.43-34.04,7.3-50.29,13.41-59.46,22.39-110.54,70.41-136.68,131.63-6.99,16.37-11.72,33.44-15.14,51.01-2.58,13.24-3.07,26.41-3.56,39.84-.49,13.22.61,26.3,2.48,39.39,12.61,88.43,75.38,161.59,153.11,192.46,28.72,11.41,59.31,17.18,89.88,17.87,8.99.2,18.03-.3,26.98-.98,2.71-.2,5.32-.84,8.05-.85h0Z" style="--i:2; --r0:180deg; transform-origin:340px 460px"/><path class="lg-arc" fill="#91BB65" d="M310.16,620.2c-3.23-3.72-8.27-6.33-12.12-9.33-6.68-5.2-13-11.08-19-17.14-20.75-20.95-36.96-48.71-45.4-77.78-5.06-17.4-8.59-36.52-8.24-54.79.37-19.06,2.92-37.9,8.32-56.13,18.4-62.1,66.49-112.23,123.77-134.14,26.74-10.23,55.26-15.49,83.71-14.25,9.74.42,19.38,1.88,29.01,3.44,3.24.52,6.4,1.72,9.67,2-2.25-1.96-5.38-2.67-8.07-3.75-6.57-2.62-13.36-4.81-20.17-6.61-26.85-7.04-54.81-8.71-82.18-4.84-72.75,10.32-139.26,59.74-166.42,133.41-16.81,45.57-14.92,99.41,5.33,143.45,13.04,28.37,32.87,52.72,56.97,71.08,9.9,7.55,20.4,14.18,31.49,19.55,4.33,2.1,8.65,4.66,13.31,5.82h0Z" style="--i:1; --r0:180deg; transform-origin:390px 440px"/><path class="lg-arc" fill="#74B359" d="M282.85,537.21c.68-1.75.12-3.73-.13-5.57-.43-3.13-.77-6.28-1.07-9.42-.97-10.33-.6-20.94.28-31.26,2.96-34.66,16.01-67.78,35.97-95.19,10.05-13.8,22.23-25.84,35.53-36.03,48.46-37.13,114.57-44.41,169.08-18.03,20.61,9.97,38.87,23.91,54.55,41.23,12.07,13.34,23.57,29.4,30.38,46.58.31-1.45-.27-2.86-.66-4.28-.81-2.99-1.52-6.08-2.54-8.99-3.82-10.79-8.1-21.13-13.37-31.22-24.19-46.37-70.34-80.63-119.69-88.57-23.42-3.77-47.44-3.14-70.47,3.06-63.05,16.98-112.43,72.65-124.91,140.49-4.12,22.4-4.03,46.1-.14,68.52,1.08,6.2,2.45,12.34,4.1,18.4.94,3.44,2.3,6.79,3.09,10.27h0Z" style="--i:0; --r0:180deg; transform-origin:440px 460px"/><g class="lg-word" fill="#00294E" clip-path="url(#lgClip)"><path d="M517.26,477.61c-5.95.84-11.32,1.02-17.02,3.52-4.66,2.04-8.81,5.3-11.43,9.94-4.77,8.46-3.08,19.82,4.47,25.76,12.59,9.9,29.63,8.2,43.58,14.54,5.52,2.51,10.49,8.12,8.04,14.85-1.94,5.33-6.85,8.42-11.73,10.08-9.95,3.39-23.89,2.19-32.19-5.08-2.28-1.99-4.11-4.48-5.29-7.36-.7-1.7-.86-4.45-2.46-5.51-1.57-1.03-3.85-.1-5.54-.02-1.15.06-2.62-.18-3.63.55-1.74,1.24-.97,4.28-.52,6.02,1.44,5.76,4.67,10.61,8.97,14.39,7.06,6.21,16.32,7.56,25.11,8.17,6.19.43,12.35.2,18.44-1.36,6.32-1.62,12.75-5.34,16.74-10.87,6.53-9.03,5.64-22.14-2.71-29.5-10.92-9.65-27.61-9.61-40.74-13.57-5.31-1.6-12.64-5.37-11.58-12.58.76-5.18,5.62-9.15,10.07-10.52,8.46-2.6,20.42-3.07,27.92,2.67,2.08,1.59,3.88,3.78,5.05,6.21.77,1.61,1.02,3.99,2.33,5.22,1.7,1.59,7.75,1.05,9.54-.24,1.29-.93,1.18-3.07.98-4.52-.53-3.85-2.92-7.69-5.29-10.54-6.13-7.37-16.18-9.63-24.97-10.01-2.11-.09-4.04-.55-6.15-.25h0Z"/><path d="M418.87,479.05c-9.08,3.07-3.95,18.26,5.26,14.89,9.06-3.31,3.93-18-5.26-14.89Z"/><path d="M454.35,478.97c-9.14,3.56-3.33,18.66,5.73,14.7,8.62-3.76,3.12-18.14-5.73-14.7Z"/><path d="M647.43,478.86c-1.96.95-1.48,3.8-1.47,5.67l.3,73.94c0,1.79-.38,4.29.31,5.96.97,2.34,7.21,2.14,9.11,1.25,1.86-.87,1.48-3.48,1.47-5.24l-.3-74.45c0-1.79.38-4.29-.31-5.96-.99-2.39-7.2-2.1-9.11-1.18h0Z"/><path d="M751.06,502.3c-2.12,0-5.49-.66-7.42.4-1.6.88-1.67,5.95-.31,7.08,1.68,1.4,5.73.58,7.76.57l.13,33.7c.02,5.03-.9,11.46,1.34,16.09,3,6.22,10.18,6.01,15.78,5.99,1.95,0,5.43.29,6.32-2.1.68-1.83-.25-6.41-2.17-7.12-1.16-.43-2.52.15-3.72.05-2.84-.23-5.38-1.94-6.26-4.9-1.21-4.04-.42-9.38-.43-13.58l-.11-28.17c2.76,0,7.89,1.03,10.3-.55,2.04-1.33,2.1-5.71,0-7.01-2.48-1.55-7.53-.49-10.34-.48l-.08-21.13c-3.02.34-9.38,2.83-10.57,6.09-.54,1.5-.27,3.44-.26,5.01l.04,10.06h0Z"/><path d="M419.91,502.63c-6.47,1.59-5.64,8.33-5.62,13.84l.12,30.18c.02,4.87-.57,10.27.16,15.09.62,4.04,4.68,6.91,8.44,6.15,6.54-1.31,6.12-7.71,6.1-13.24l-.12-30.68c-.02-4.98.69-10.7-.22-15.59-.79-4.25-4.97-6.69-8.85-5.74Z"/><path d="M455.39,502.51c-6.32,1.65-5.64,8.45-5.62,13.84l.12,30.18c.02,4.82-.66,10.35.22,15.09.8,4.32,4.86,6.95,8.85,6.09,6.5-1.41,5.64-8.24,5.62-13.68l-.12-30.68c-.02-4.87.57-10.27-.16-15.09-.68-4.43-5-6.76-8.91-5.74Z"/><path d="M898.69,510.88c-.67-2.36.21-5.92-1.33-7.88-1.6-2.05-8.22-2.01-8.96.9-.98,3.85-.12,9.06-.1,13.05l.16,40.74c0,1.83-.34,4.16.18,5.92.74,2.52,8.4,2.34,9.91.72.98-1.04.81-2.81.81-4.16l-.04-10.06c-.05-13.63-3.86-35.49,12.61-39.83,1.91-.5,4.17-.98,6.15-.87,1.42.08,2.89.46,4.26.84,8.1,2.24,9.5,9.91,9.53,17.63l.09,23.14c.01,3.68-.52,7.93.15,11.55.62,3.32,4.6,2.56,7,2.51,1.06-.02,2.55.1,3.29-.89.78-1.03.48-2.93.47-4.16l-.14-34.71c-.03-7.35,0-14.27-5.75-19.49-7.46-6.77-21.82-6.82-30.29-2.39-3.2,1.67-6.48,3.92-8.01,7.44Z"/><path d="M977.66,500.78c-5.27.89-10.66,2.36-14.6,6.45-6.19,6.43-5.6,17.12,1,22.88,3.34,2.92,7.75,4.02,11.85,5.1,6.16,1.62,12.37,3.12,18.47,4.98,3.99,1.21,8.45,4.53,6.67,9.58-3.62,10.24-20.5,9.98-27.43,4.35-1.59-1.3-3.09-2.88-4.08-4.75-.69-1.3-1.02-3.09-2.29-3.93-1.69-1.12-7.06-.24-8.65.95-1.54,1.16-.95,3.47-.38,5.03,1.36,3.73,3.87,7.12,6.91,9.45,8.35,6.43,22.06,6.34,31.71,3.88,4.78-1.21,9.56-3.89,12.68-7.99,4.59-6.03,5.31-15.9-.54-21.37-7.35-6.86-19.32-7.36-28.38-10.06-3.83-1.14-12-3.2-10.78-9.17.66-3.25,3.65-5.41,6.46-6.34,5.53-1.83,13.01-2.12,17.98,1.56,1.33.98,2.55,2.27,3.47,3.69.74,1.14,1.13,2.7,2.34,3.4,1.68.97,7.13.14,8.68-1.01,1.26-.95.97-2.59.54-3.94-.97-3.05-2.71-5.79-5.12-7.77-6.73-5.53-18.39-6.36-26.51-4.99h0Z"/><path d="M720.53,556.72c0,2.15-.76,6.6.79,8.25,1.71,1.81,8.2,1.41,8.97-1.29.52-1.81.19-4.11.18-5.98l-.16-39.74c-.02-4.07.89-9.63-.26-13.53-.81-2.75-8.04-3.04-9.93-1.44-1.01.86-.74,2.72-.74,3.94l.04,10.56c.06,14.45,3.23,35.13-13.56,39.92-2.16.62-4.38,1.07-6.62.74-4.5-.66-9.43-3.11-11.22-7.86-1.2-3.18-1.02-6.72-1.17-10.06-.36-7.88-.52-15.73-.55-23.64-.01-3.69.74-8.48-.2-12.04-.73-2.79-7.69-2.88-9.64-1.49-1.84,1.31-1.08,5.52-1.07,7.53l.09,22.13c.03,8.05-1.14,17.29,2.62,24.64,5.76,11.28,23.83,11.75,33.46,6.77,3.51-1.82,5.84-5.06,8.96-7.41h0Z"/><path d="M786.69,502.7c-1.34.96-1.08,3.04-1.08,4.52l.17,41.75c.02,4.43-.91,10.28.21,14.56.73,2.79,7.69,2.88,9.64,1.49,1.34-.96,1.08-3.04,1.08-4.52l-.17-41.75c-.02-4.43.91-10.28-.21-14.56-.73-2.79-7.69-2.88-9.64-1.49Z"/><path d="M627.2,514.27c-7.47-10.8-21.18-14.28-33.2-12.25-7.53,1.27-14.84,4.86-19.57,11.41-4.54,6.28-5.4,13.51-5.37,21.14.03,7.63.98,14.9,5.54,21.11,7.42,10.11,20.51,13.03,31.96,11.25,7.58-1.18,15.05-4.62,19.96-11.06,3.92-5.14,4.97-11.08,5.55-17.48.75-8.31-.06-17.16-4.87-24.13ZM603.69,558.51c-8.65,1.13-17.68-3.03-21.12-11.91-1.67-4.32-1.67-8.49-1.68-13.07-.02-5.72.74-11.53,4.35-16.1,3.51-4.45,8.31-6.11,13.54-6.88,2.1-.3,4.08,0,6.15.4,21.81,4.28,20.98,44.66-1.23,47.57Z"/><path d="M868.18,512.48c-7.48-10.03-20.95-13.19-32.44-11.24-12.42,2.1-22.21,10.61-24.74,24-.6,3.22-.21,6.79-.2,10.06.03,6.83,1.13,13.48,5.1,19.1,7.46,10.58,20.61,13.59,32.4,11.75,7.97-1.24,15.53-4.99,20.52-11.92,3.58-4.97,4.56-11.05,4.96-17.12.57-8.72-.27-17.49-5.59-24.63ZM845.42,557.73c-8.13,1.07-17.26-2.6-20.84-10.91-1.96-4.55-1.95-9.19-1.97-14.08-.02-5.77.72-11.5,4.35-16.1,3.54-4.49,8.28-6.11,13.54-6.88,2.09-.31,4.09-.03,6.15.41,21.49,4.66,21.12,44.6-1.23,47.55Z"/></g><path class="lg-dot" fill="#00294E" d="M785.46 478.04 H796.50 V489.91 H785.46 Z"/></svg>
 <p class="stage-slogan">{{t.slogan}}</p>
 <p class="stage-sub">{{t.sloganSub}}</p>
 </div>
@@ -395,7 +413,7 @@ body{margin:0;background:#FFFFFF;color:#00294E;font-family:Inter,system-ui,sans-
 <section id="course" style="background: #00294E; color: #FFFFFF">
 <div class="wrap g2" style="gap: 64px; align-items: center; padding-top: 96px; padding-bottom: 96px">
 <div style="display: flex; justify-content: center; min-width: 0">
-<svg class="gs" role="img" aria-label="4 · 8 · 12 · 16" viewBox="0 0 260 260" style="width: 100%; max-width: 420px; height: auto"><g class="garc" style="--i:0"><path class="trk" d="M96.9 96.9 A46.8 46.8 0 0 1 163.1 163.1"/><path class="fil" pathLength="1" d="M96.9 96.9 A46.8 46.8 0 0 1 163.1 163.1"/><text class="lab" x="156.2" y="168.8">4</text></g><g class="garc" style="--i:1"><path class="trk" d="M130.0 71.5 A58.5 58.5 0 0 1 130.0 188.5"/><path class="fil" pathLength="1" d="M130.0 71.5 A58.5 58.5 0 0 1 130.0 188.5"/><text class="lab" x="121.0" y="187.8">8</text></g><g class="garc" style="--i:2"><path class="trk" d="M181.7 78.3 A73.1 73.1 0 0 1 78.3 181.7"/><path class="fil" pathLength="1" d="M181.7 78.3 A73.1 73.1 0 0 1 78.3 181.7"/><text class="lab" x="72.3" y="175.0">12</text></g><g class="garc" style="--i:3"><path class="trk" d="M221.4 130.0 A91.4 91.4 0 0 1 38.6 130.0"/><path class="fil" pathLength="1" d="M221.4 130.0 A91.4 91.4 0 0 1 38.6 130.0"/><text class="lab" x="39.0" y="121.0">16</text></g></svg>
+<svg class="mol" aria-hidden="true" viewBox="-110.3 -90.0 279.4 231.0" style="width: 100%; max-width: 460px; height: auto; overflow: visible"><g class="mol-g"><path class="mb" pathLength="1" style="--i:0" d="M29.4 17.0 L58.9 34.0"/><path class="mb" pathLength="1" style="--i:0" d="M29.4 -17.0 L29.4 17.0"/><path class="mb" pathLength="1" style="--i:0" d="M0.0 34.0 L29.4 17.0"/><path class="mb" pathLength="1" style="--i:1" d="M58.9 34.0 L58.9 68.0"/><path class="mb" pathLength="1" style="--i:1" d="M0.0 -34.0 L29.4 -17.0"/><path class="mb" pathLength="1" style="--i:1" d="M29.4 -17.0 L58.9 -34.0"/><path class="mb" pathLength="1" style="--i:1" d="M-29.4 17.0 L0.0 34.0"/><path class="mb" pathLength="1" style="--i:1" d="M0.0 34.0 L-0.0 68.0"/><path class="mb" pathLength="1" style="--i:1" d="M58.9 34.0 L88.3 17.0"/><path class="mb" pathLength="1" style="--i:2" d="M88.3 17.0 L117.7 34.0"/><path class="mb" pathLength="1" style="--i:2" d="M88.3 -17.0 L88.3 17.0"/><path class="mb" pathLength="1" style="--i:2" d="M-58.8 34.0 L-29.4 17.0"/><path class="mb" pathLength="1" style="--i:2" d="M29.4 85.0 L58.9 68.0"/><path class="mb" pathLength="1" style="--i:2" d="M58.9 -34.0 L59.0 -68.0"/><path class="mb" pathLength="1" style="--i:2" d="M-29.4 -17.0 L-29.4 17.0"/><path class="mb" pathLength="1" style="--i:2" d="M-29.4 -17.0 L0.0 -34.0"/><path class="mb" pathLength="1" style="--i:2" d="M58.9 -34.0 L88.3 -17.0"/><path class="mb" pathLength="1" style="--i:2" d="M-0.0 68.0 L29.4 85.0"/><path class="mb" pathLength="1" style="--i:3" d="M117.7 34.0 L117.7 68.0"/><path class="mb" pathLength="1" style="--i:3" d="M-58.8 -34.0 L-29.4 -17.0"/><path class="mb" pathLength="1" style="--i:3" d="M-88.3 17.0 L-58.8 34.0"/><path class="mb" pathLength="1" style="--i:3" d="M29.3 119.0 L29.4 85.0"/><path class="mb" pathLength="1" style="--i:4" d="M117.7 68.0 L147.1 85.0"/><path class="mb" pathLength="1" style="--i:4" d="M-58.8 -68.0 L-58.8 -34.0"/><path class="mb mb2" pathLength="1" style="--i:1" d="M39.1 15.1 L55.7 24.7"/><path class="mb mb2" pathLength="1" style="--i:1" d="M9.7 35.9 L26.2 26.3"/><path class="mb mb2" pathLength="1" style="--i:1" d="M22.9 -9.5 L22.9 9.5"/><path class="mb mb2" pathLength="1" style="--i:2" d="M-19.7 15.1 L-3.2 24.7"/><path class="mb mb2" pathLength="1" style="--i:2" d="M52.4 41.5 L52.4 60.5"/><path class="mb mb2" pathLength="1" style="--i:2" d="M39.1 -15.1 L55.7 -24.7"/><path class="mb mb2" pathLength="1" style="--i:3" d="M81.8 -9.5 L81.8 9.5"/><path class="mb mb2" pathLength="1" style="--i:3" d="M9.7 66.1 L26.2 75.7"/><path class="mb mb2" pathLength="1" style="--i:3" d="M-19.7 -15.1 L-3.2 -24.7"/><circle class="mn mn-c" style="--i:0" cx="29.4" cy="17.0" r="4"/><circle class="mn mn-c" style="--i:1" cx="29.4" cy="-17.0" r="4"/><circle class="mn mn-c" style="--i:1" cx="0.0" cy="34.0" r="4"/><circle class="mn mn-c" style="--i:1" cx="58.9" cy="34.0" r="4"/><circle class="mn mn-c" style="--i:2" cx="0.0" cy="-34.0" r="4"/><circle class="mn mn-c" style="--i:2" cx="-29.4" cy="17.0" r="4"/><circle class="mn mn-c" style="--i:2" cx="58.9" cy="-34.0" r="4"/><circle class="mn mn-c" style="--i:2" cx="88.3" cy="17.0" r="4"/><circle class="mn mn-c" style="--i:2" cx="58.9" cy="68.0" r="4"/><circle class="mn mn-c" style="--i:2" cx="-0.0" cy="68.0" r="4"/><circle class="mn mn-c" style="--i:3" cx="-29.4" cy="-17.0" r="4"/><circle class="mn mn-c" style="--i:3" cx="88.3" cy="-17.0" r="4"/><circle class="mn mn-c" style="--i:3" cx="29.4" cy="85.0" r="4"/><circle class="mn mn-o" style="--i:3" cx="59.0" cy="-68.0" r="7.5"/><circle class="mn mn-c" style="--i:3" cx="117.7" cy="34.0" r="4"/><circle class="mn mn-c" style="--i:3" cx="-58.8" cy="34.0" r="4"/><circle class="mn mn-c" style="--i:4" cx="-58.8" cy="-34.0" r="4"/><circle class="mn mn-c" style="--i:4" cx="117.7" cy="68.0" r="4"/><circle class="mn mn-o" style="--i:4" cx="29.3" cy="119.0" r="7.5"/><circle class="mn mn-o" style="--i:4" cx="-88.3" cy="17.0" r="7.5"/><circle class="mn mn-o" style="--i:5" cx="-58.8" cy="-68.0" r="7.5"/><circle class="mn mn-o" style="--i:5" cx="147.1" cy="85.0" r="7.5"/></g></svg>
 </div>
 <div style="display: flex; flex-direction: column; gap: 24px; min-width: 0">
 <span style="font: 500 13px/1.4 'IBM Plex Mono', monospace; letter-spacing: 0.03em; color: #74B359">{{t.courseIdx}}</span>
@@ -404,7 +422,7 @@ body{margin:0;background:#FFFFFF;color:#00294E;font-family:Inter,system-ui,sans-
 <div class="g4" style="gap: 0; border-top: 1px solid rgba(255,255,255,0.24)">
 <sc-for list="{{t.weeks}}" as="w" hint-placeholder-count="4">
 <div style="padding: 20px 16px 0 0; display: flex; flex-direction: column; gap: 8px">
-<span style="font: 500 24px/1 'IBM Plex Mono', monospace; color: #74B359">{{w.n}}</span>
+<span style="font: 500 22px/1 'IBM Plex Mono', monospace; color: #74B359; white-space: nowrap">{{w.n}}</span>
 <span style="font: 400 14px/1.5 Inter, sans-serif; color: #FFFFFF">{{w.t}}</span>
 </div>
 </sc-for>
@@ -793,7 +811,7 @@ function afterRender(v) {
 
 function watchReveals(root) {
   if (IOS[root.id]) IOS[root.id].disconnect();
-  var els = root.querySelectorAll('.rv, .rv-img, .gs');
+  var els = root.querySelectorAll('.rv, .rv-img, .gs, .mol');
   if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
   var io = IOS[root.id] = new IntersectionObserver(function (ents) {
     ents.forEach(function (en) {
@@ -876,7 +894,7 @@ function countWeeks() {
     else if (cur) cur.textContent = '16';
   })(performance.now());
 }
-setTimeout(function () { stageDone = true; maybeEnd(); }, 3800);   /* заставка отыграла */
+setTimeout(function () { stageDone = true; maybeEnd(); }, 4100);   /* заставка отыграла */
 
 var MainComp = (function () { 
 class Component extends DCLogic {
@@ -890,7 +908,7 @@ class Component extends DCLogic {
     var T = {
       ru: {
         heroCap: 'недель курса',
-        slogan: 'Рост, который можно измерить', sloganSub: 'Клиническая дерматология · [N] лет исследований', scrollCue: 'Листайте',
+        slogan: 'Рост волос, который можно измерить', sloganSub: 'Косметика для роста волос и бороды · курс 16 недель', scrollCue: 'Листайте',
         apIdx: '01 — НАУЧНЫЙ ПОДХОД', apH2: 'Сначала измеряем, потом обещаем',
         apP: 'iiSolutions — средства клинической дерматологии. Каждая формула собрана вокруг компонентов с понятной ролью, а результат оценивается по контрольным точкам, а не на глаз. [Лаборатория, партнёры и исследования — дополнить материалами бренда.]',
         apCapLab: 'ЛАБОРАТОРИЯ', apCapScope: 'КОНТРОЛЬ ОБРАЗЦОВ',
@@ -898,12 +916,12 @@ class Component extends DCLogic {
         apAltScope: 'Учёный смотрит в микроскоп',
         apItems: [
           { d: 0, n: '01', img: 'assets/img/sci-botany.jpg', alt: 'Растительное сырьё в чашках Петри: корень лопуха, имбирь, семена льна', h: 'Состав, который можно проверить', t: 'Каждое число на упаковке сверяется с составом на ней же: 11 растительных экстрактов, 6 активных компонентов, концентрация Dimixin.' },
-          { d: 2, n: '02', img: 'assets/img/sci-molecule.jpg', alt: 'Модель молекулы в руке в перчатке', h: 'Активный компонент с известной структурой', t: 'Dimixin создан на основе азелаиновой кислоты — молекулы, давно знакомой дерматологии. [Механизм действия — по материалам бренда.]' },
+          { d: 2, n: '02', img: 'assets/img/sci-molecule.jpg', alt: 'Модель молекулы в руке в перчатке', h: 'Активный комплекс с открытым составом', t: 'Dimixin объединяет копиррол, трипептид-1 меди и гидролизованный кератин — каждый компонент указан на этикетке.' },
           { d: 4, n: '03', img: 'assets/img/sci-derm.jpg', alt: 'Дерматолог осматривает кожу головы трихоскопом', h: 'Контрольные точки вместо обещаний', t: 'Курс 16 недель разбит на четыре точки. Одна и та же зона, одинаковый свет и ракурс — так изменения видно честно.' }
         ],
         sciAltLotion: 'Пробирки с растворами разной концентрации', sciAltShampoo: 'Флаконы с растительными экстрактами и корни растений',
         bandNote: 'Официальный сайт бренда',
-        nav1: 'Средства', nav2: 'Наука', nav3: 'Курс 16 недель', nav4: 'Применение', nav5: 'Где купить',
+        nav1: 'Средства', nav2: 'Наука', nav3: 'Dimixin', nav4: 'Применение', nav5: 'Где купить',
         verifyBtn: 'Проверить подлинность',
         heroIdx: 'КОМПЛЕКС ДЛЯ РОСТА ВОЛОС И БОРОДЫ',
         heroH1: 'Комплекс для роста волос и бороды',
@@ -921,15 +939,15 @@ class Component extends DCLogic {
         ],
         sciIdx: '03 — НАУКА', sciH2: 'Что внутри и как это работает',
         sciP: 'Каждое число на упаковке проверяется составом на ней же. Ниже — активные компоненты и логика системы. [Механизм действия и ссылки на исследования — дополнить материалами бренда.]',
-        sciLotionTag: 'Лосьон · активный компонент', sciLotionH: 'Dimixin на основе азелаиновой кислоты',
-        sciLotionP: '[Описание механизма: как компонент действует на кожу головы и волосяные фолликулы. Текст — от бренда, после проверки юристом.]',
+        sciLotionTag: 'Лосьон · состав', sciLotionH: 'Dimixin 10 / 15 % и азелаиновая кислота',
+        sciLotionP: 'Состав: комплекс Dimixin (копиррол, трипептид-1 меди, гидролизованный кератин), спирт этиловый, вода, пропиленгликоль, азелаиновая кислота.',
         sciShampooTag: 'Шампунь · комплекс', n11: 'растительных\nэкстрактов', n6: 'активных\nкомпонентов',
         extracts: ['стручковый перец', 'эмблика', 'корень аира', 'конский каштан', 'семена льна', 'корень лопуха', 'корень имбиря', 'череда', 'зародыши сои', 'зародыши пшеницы', 'шлемник байкальский'],
         benefits: [{ t: 'Рост новых волос', hair: true }, { t: 'Укрепление фолликулов', shield: true }, { t: 'Питание и увлажнение', drop: true }, { t: 'Защита от перхоти', bubble: true }],
-        courseIdx: '04 — КУРС', courseH2: 'Курс 16 недель',
-        courseP: 'Рост волос — процесс небыстрый, поэтому курс разбит на четыре контрольные точки. Применяйте средства регулярно и сравнивайте результат по шагам, а не день за днём.',
-        weeks: [{ n: '04', t: 'первая точка' }, { n: '08', t: 'середина курса' }, { n: '12', t: 'третья точка' }, { n: '16', t: 'итог курса' }],
-        courseTip: 'Фотографируйте одну и ту же зону при одинаковом свете и ракурсе — так изменения видно честно.',
+        courseIdx: '04 — DIMIXIN', courseH2: 'Что такое Dimixin',
+        courseP: 'Dimixin — активный комплекс лосьона iiSolutions. Он объединяет три компонента, а цифра на флаконе — 10 или 15 % — показывает долю комплекса в лосьоне.',
+        weeks: [{ n: '01', t: 'копиррол' }, { n: '02', t: 'трипептид-1 меди' }, { n: '03', t: 'гидролизованный кератин' }, { n: '10/15 %', t: 'доля комплекса в лосьоне' }],
+        courseTip: 'На этикетке: стимулирует рост волос, поддерживает метаболизм волосяных фолликулов, увеличивает густоту и снижает выпадение волос.',
         useIdx: '05 — ПРИМЕНЕНИЕ', useH2: 'Как применять',
         howto: [
           { title: 'Лосьон Dimixin', data: '60 ml · пипетка', steps: [{ n: '1', t: 'Наберите 1 мл пипеткой.' }, { n: '2', t: 'Нанесите на сухую кожу в зонах, где волосы поредели, или на бороду.' }, { n: '3', t: 'Применяйте дважды в день. [Сверить с инструкцией]' }] },
@@ -954,7 +972,7 @@ class Component extends DCLogic {
       },
       en: {
         heroCap: 'week course',
-        slogan: 'Growth you can measure', sloganSub: 'Clinical dermatology · [N] years of research', scrollCue: 'Scroll',
+        slogan: 'Hair growth you can measure', sloganSub: 'Hair and beard growth care · 16-week course', scrollCue: 'Scroll',
         apIdx: '01 — SCIENTIFIC APPROACH', apH2: 'Measure first, promise later',
         apP: 'iiSolutions is a clinical dermatology brand. Every formula is built around ingredients with a clear role, and results are assessed at checkpoints rather than by eye. [Laboratory, partners and studies — to be supplied by the brand.]',
         apCapLab: 'LABORATORY', apCapScope: 'SAMPLE CONTROL',
@@ -962,12 +980,12 @@ class Component extends DCLogic {
         apAltScope: 'A scientist looking into a microscope',
         apItems: [
           { d: 0, n: '01', img: 'assets/img/sci-botany.jpg', alt: 'Botanical raw materials in petri dishes: burdock root, ginger, flaxseed', h: 'A formula you can check', t: 'Every number on the pack can be checked against the ingredient list on the same pack: 11 botanical extracts, 6 actives, Dimixin concentration.' },
-          { d: 2, n: '02', img: 'assets/img/sci-molecule.jpg', alt: 'A molecular model in a gloved hand', h: 'An active with a known structure', t: 'Dimixin is based on azelaic acid, a molecule dermatology has known for a long time. [Mechanism of action — per brand materials.]' },
+          { d: 2, n: '02', img: 'assets/img/sci-molecule.jpg', alt: 'A molecular model in a gloved hand', h: 'An active complex with an open formula', t: 'Dimixin combines copyrrol, copper tripeptide-1 and hydrolyzed keratin, and every ingredient is listed on the label.' },
           { d: 4, n: '03', img: 'assets/img/sci-derm.jpg', alt: 'A dermatologist examining the scalp with a trichoscope', h: 'Checkpoints, not promises', t: 'The 16-week course has four checkpoints. Same area, same light, same angle: that is how changes show honestly.' }
         ],
         sciAltLotion: 'Test tubes with solutions of different strengths', sciAltShampoo: 'Vials of botanical extracts and plant roots',
         bandNote: 'Official brand website',
-        nav1: 'Products', nav2: 'Science', nav3: '16-week course', nav4: 'How to use', nav5: 'Where to buy',
+        nav1: 'Products', nav2: 'Science', nav3: 'Dimixin', nav4: 'How to use', nav5: 'Where to buy',
         verifyBtn: 'Verify authenticity',
         heroIdx: 'HAIR AND BEARD GROWTH SYSTEM',
         heroH1: 'A system for hair and beard growth',
@@ -985,15 +1003,15 @@ class Component extends DCLogic {
         ],
         sciIdx: '03 — SCIENCE', sciH2: 'What is inside and how it works',
         sciP: 'Every number on the pack can be checked against the ingredient list on the same pack. Below are the actives and the logic of the system. [Mechanism of action and study references — to be supplied by the brand.]',
-        sciLotionTag: 'Solution · active ingredient', sciLotionH: 'Dimixin, based on azelaic acid',
-        sciLotionP: '[Mechanism description: how the active works on the scalp and hair follicles. Copy from the brand, reviewed by legal.]',
+        sciLotionTag: 'Solution · ingredients', sciLotionH: 'Dimixin 10 / 15% and azelaic acid',
+        sciLotionP: 'Ingredients: Dimixin complex (copyrrol, copper tripeptide-1, hydrolyzed keratin), ethyl alcohol, water, propylene glycol, azelaic acid.',
         sciShampooTag: 'Shampoo · complex', n11: 'botanical\nextracts', n6: 'active\ningredients',
         extracts: ['capsicum', 'emblica', 'sweet flag root', 'horse chestnut', 'flaxseed', 'burdock root', 'ginger root', 'bur marigold', 'soybean germ', 'wheat germ', 'baikal skullcap'],
         benefits: [{ t: 'New hair growth', hair: true }, { t: 'Stronger follicles', shield: true }, { t: 'Nourishing and hydrating', drop: true }, { t: 'Dandruff protection', bubble: true }],
-        courseIdx: '04 — COURSE', courseH2: '16-week course',
-        courseP: 'Hair grows slowly, so the course has four checkpoints. Use the products consistently and compare results step by step, not day by day.',
-        weeks: [{ n: '04', t: 'first checkpoint' }, { n: '08', t: 'mid-course' }, { n: '12', t: 'third checkpoint' }, { n: '16', t: 'course result' }],
-        courseTip: 'Photograph the same area in the same light and from the same angle — that is how changes show honestly.',
+        courseIdx: '04 — DIMIXIN', courseH2: 'What Dimixin is',
+        courseP: 'Dimixin is the active complex of the iiSolutions solution. It combines three ingredients, and the number on the bottle — 10 or 15% — is the share of the complex in the solution.',
+        weeks: [{ n: '01', t: 'copyrrol' }, { n: '02', t: 'copper tripeptide-1' }, { n: '03', t: 'hydrolyzed keratin' }, { n: '10/15%', t: 'share of the complex in the solution' }],
+        courseTip: 'From the label: promotes hair growth, supports metabolism of follicles, boosts density and reduces hair loss.',
         useIdx: '05 — HOW TO USE', useH2: 'Directions',
         howto: [
           { title: 'Dimixin Solution', data: '2 fl oz · dropper', steps: [{ n: '1', t: 'Fill the dropper to 1 mL.' }, { n: '2', t: 'Apply to dry skin over thinning areas or to the beard.' }, { n: '3', t: 'Use twice a day. [Verify with label]' }] },
@@ -1018,7 +1036,7 @@ class Component extends DCLogic {
       },
       kk: {
         heroCap: 'апталық курс',
-        slogan: 'Өлшеуге болатын өсу', sloganSub: 'Клиникалық дерматология · [N] жылдық зерттеу', scrollCue: 'Төмен',
+        slogan: 'Өлшеуге болатын шаш өсуі', sloganSub: 'Шаш пен сақал өсуіне арналған косметика · 16 апталық курс', scrollCue: 'Төмен',
         apIdx: '01 — ҒЫЛЫМИ ТӘСІЛ', apH2: 'Алдымен өлшейміз, содан кейін уәде береміз',
         apP: 'iiSolutions — клиникалық дерматология құралдары. Әр формула рөлі түсінікті компоненттер төңірегінде құрылған, ал нәтиже көзбен емес, бақылау нүктелері бойынша бағаланады. [Зертхана, серіктестер және зерттеулер — бренд материалдарымен толықтырылады.]',
         apCapLab: 'ЗЕРТХАНА', apCapScope: 'ҮЛГІЛЕРДІ БАҚЫЛАУ',
@@ -1026,12 +1044,12 @@ class Component extends DCLogic {
         apAltScope: 'Ғалым микроскопқа қарап отыр',
         apItems: [
           { d: 0, n: '01', img: 'assets/img/sci-botany.jpg', alt: 'Петри табақшаларындағы өсімдік шикізаты: шырмауық тамыры, зімбір, зығыр тұқымы', h: 'Тексеруге болатын құрам', t: 'Қаптамадағы әр сан сол қаптамадағы құраммен салыстырылады: 11 өсімдік сығындысы, 6 белсенді компонент, Dimixin концентрациясы.' },
-          { d: 2, n: '02', img: 'assets/img/sci-molecule.jpg', alt: 'Қолғап киген қолдағы молекула моделі', h: 'Құрылымы белгілі белсенді компонент', t: 'Dimixin азелаин қышқылы негізінде жасалған — дерматологияға бұрыннан таныс молекула. [Әсер ету механизмі — бренд материалдары бойынша.]' },
+          { d: 2, n: '02', img: 'assets/img/sci-molecule.jpg', alt: 'Қолғап киген қолдағы молекула моделі', h: 'Құрамы ашық белсенді кешен', t: 'Dimixin копиррол, мыс трипептиді-1 және гидролизденген кератинді біріктіреді — әр компонент этикеткада көрсетілген.' },
           { d: 4, n: '03', img: 'assets/img/sci-derm.jpg', alt: 'Дерматолог бас терісін трихоскоппен тексеруде', h: 'Уәденің орнына бақылау нүктелері', t: '16 апталық курс төрт нүктеге бөлінген. Бір аймақ, бірдей жарық пен бұрыш — өзгерістер сонда анық көрінеді.' }
         ],
         sciAltLotion: 'Әр түрлі концентрациядағы ерітінділері бар сынауықтар', sciAltShampoo: 'Өсімдік сығындылары бар құтылар мен тамырлар',
         bandNote: 'Брендтің ресми сайты',
-        nav1: 'Құралдар', nav2: 'Ғылым', nav3: '16 апталық курс', nav4: 'Қолдану', nav5: 'Қайдан сатып алуға болады',
+        nav1: 'Құралдар', nav2: 'Ғылым', nav3: 'Dimixin', nav4: 'Қолдану', nav5: 'Қайдан сатып алуға болады',
         verifyBtn: 'Түпнұсқалығын тексеру',
         heroIdx: 'ШАШ ПЕН САҚАЛ ӨСУІНЕ АРНАЛҒАН КЕШЕН',
         heroH1: 'Шаш пен сақал өсуіне арналған кешен',
@@ -1049,15 +1067,15 @@ class Component extends DCLogic {
         ],
         sciIdx: '03 — ҒЫЛЫМ', sciH2: 'Құрамында не бар және ол қалай әсер етеді',
         sciP: 'Қаптамадағы әр сан сол қаптамадағы құраммен тексеріледі. Төменде — белсенді компоненттер мен жүйенің логикасы. [Әсер ету механизмі мен зерттеулерге сілтемелер — бренд материалдарымен толықтырылады.]',
-        sciLotionTag: 'Лосьон · белсенді компонент', sciLotionH: 'Азелаин қышқылы негізіндегі Dimixin',
-        sciLotionP: '[Механизм сипаттамасы: компонент бас терісі мен шаш фолликулаларына қалай әсер етеді. Мәтін — брендтен, заңгер тексергеннен кейін.]',
+        sciLotionTag: 'Лосьон · құрамы', sciLotionH: 'Dimixin 10 / 15 % және азелаин қышқылы',
+        sciLotionP: 'Құрамы: Dimixin кешені (копиррол, мыс трипептиді-1, гидролизденген кератин), этил спирті, су, пропиленгликоль, азелаин қышқылы.',
         sciShampooTag: 'Сусабын · кешен', n11: 'өсімдік\nсығындысы', n6: 'белсенді\nкомпонент',
         extracts: ['бұрыш', 'эмблика', 'ақиық тамыры', 'ат талшын', 'зығыр тұқымы', 'шырмауық тамыры', 'зімбір тамыры', 'итошаған', 'соя ұрығы', 'бидай ұрығы', 'байкал шлемнигі'],
         benefits: [{ t: 'Жаңа шаштың өсуі', hair: true }, { t: 'Фолликулаларды нығайту', shield: true }, { t: 'Қоректендіру және ылғалдандыру', drop: true }, { t: 'Қайызғақтан қорғау', bubble: true }],
-        courseIdx: '04 — КУРС', courseH2: '16 апталық курс',
-        courseP: 'Шаш баяу өседі, сондықтан курс төрт бақылау нүктесіне бөлінген. Құралдарды үнемі қолданып, нәтижені күн сайын емес, кезең-кезеңімен салыстырыңыз.',
-        weeks: [{ n: '04', t: 'бірінші нүкте' }, { n: '08', t: 'курстың ортасы' }, { n: '12', t: 'үшінші нүкте' }, { n: '16', t: 'курс қорытындысы' }],
-        courseTip: 'Бір аймақты бірдей жарықта және бірдей бұрыштан суретке түсіріңіз — өзгерістер сонда анық көрінеді.',
+        courseIdx: '04 — DIMIXIN', courseH2: 'Dimixin деген не',
+        courseP: 'Dimixin — iiSolutions лосьонының белсенді кешені. Ол үш компонентті біріктіреді, ал құтыдағы 10 немесе 15 % саны кешеннің лосьондағы үлесін көрсетеді.',
+        weeks: [{ n: '01', t: 'копиррол' }, { n: '02', t: 'мыс трипептиді-1' }, { n: '03', t: 'гидролизденген кератин' }, { n: '10/15 %', t: 'кешеннің лосьондағы үлесі' }],
+        courseTip: 'Этикеткада: шаштың өсуін ынталандырады, шаш фолликулаларының метаболизмін қолдайды, қалыңдығын арттырып, түсуін азайтады.',
         useIdx: '05 — ҚОЛДАНУ', useH2: 'Қалай қолдану керек',
         howto: [
           { title: 'Dimixin лосьоны', data: '60 ml · тамызғыш', steps: [{ n: '1', t: 'Тамызғышпен 1 мл алыңыз.' }, { n: '2', t: 'Шаш сирек өскен аймақтардағы құрғақ теріге немесе сақалға жағыңыз.' }, { n: '3', t: 'Күніне екі рет қолданыңыз. [Нұсқаулықпен салыстыру]' }] },
